@@ -2,9 +2,12 @@ FROM python:3.7-slim
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY ./app /app
+RUN mkdir /app
 WORKDIR /app
-COPY model/model.onnx .
+
+RUN mkdir model
+COPY model/model.onnx model/model.onnx
+COPY EmotionModel.py EmotionModel.py
 EXPOSE 5000
 
 # Define environment variable
