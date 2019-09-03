@@ -1,12 +1,14 @@
-#pip install Pillow
+# pip install Pillow
 from PIL import Image
-#pip install numpy
+
+# pip install numpy
 import numpy as np
-#pip installseldon-core
+
+# pip install seldon-core
 from seldon_core.seldon_client import SeldonClient
 
 path_to_image = "images/smile.jpg"
-image = Image.open(path_to_image).convert('L')
+image = Image.open(path_to_image).convert("L")
 resized = image.resize((64, 64))
 values = np.array(resized).reshape(1, 1, 64, 64)
 
@@ -26,12 +28,10 @@ sc = SeldonClient(
     gateway_endpoint=minikube_ambassador_endpoint,
     transport="rest",
     deployment_name=deployment_name,
-    namespace=namespace
+    namespace=namespace,
 )
 
 response = sc.predict(
-    data=values,
-    deployment_name=deployment_name,
-    payload_type="ndarray"
+    data=values, deployment_name=deployment_name, payload_type="ndarray"
 )
 print(response)
